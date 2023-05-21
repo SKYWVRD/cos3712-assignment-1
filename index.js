@@ -6,12 +6,12 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 const rotateButton = document.getElementById("enableRotation");
 const reverseButton = document.getElementById("reverseRotation");
 const speedSlider = document.getElementById("rotationSpeed");
-const zoomSlider = document.getElementById('zoomDistance');
+const zoomSlider = document.getElementById("zoomDistance");
 
 rotateButton.addEventListener("click", enableRotation);
 reverseButton.addEventListener("click", reverseRotation);
-speedSlider.addEventListener("input", changeRotationSpeed)
-zoomSlider.addEventListener("input", changeZoomDistance)
+speedSlider.addEventListener("input", changeRotationSpeed);
+zoomSlider.addEventListener("input", changeZoomDistance);
 
 const scene = new THREE.Scene();
 
@@ -80,20 +80,20 @@ building.position.setX(barnX);
 building.position.setZ(barnZ);
 
 // Pond Information
-
 const pondColor = 0x26b7d8;
 const pondShoreColor = 0xb44e09;
-const pondX = (-12.5);
-const pondZ = (12.5);
+const pondX = -12.5;
+const pondZ = 12.5;
 
 // Pond geometry
-
 const geometryPond = new THREE.CylinderGeometry(7, 7, 0.5, 20);
 const materialPond = new THREE.MeshStandardMaterial({ color: pondColor });
 const pond = new THREE.Mesh(geometryPond, materialPond);
 
 const geometryPondShore = new THREE.CylinderGeometry(7.5, 7.5, 0.4, 20);
-const materialPondShore = new THREE.MeshBasicMaterial({ color: pondShoreColor });
+const materialPondShore = new THREE.MeshBasicMaterial({
+  color: pondShoreColor,
+});
 const pondShore = new THREE.Mesh(geometryPondShore, materialPondShore);
 
 scene.add(pond);
@@ -105,7 +105,6 @@ pondShore.position.setX(pondX);
 pondShore.position.setZ(pondZ);
 
 // Water Tower Information
-
 const geometryWaterTower = new THREE.CylinderGeometry(4, 4, 10, 20);
 const materialWaterTower = new THREE.MeshStandardMaterial({ color: 0x0000ff });
 const waterTower = new THREE.Mesh(geometryWaterTower, materialWaterTower);
@@ -113,7 +112,6 @@ const waterTower = new THREE.Mesh(geometryWaterTower, materialWaterTower);
 scene.add(waterTower);
 
 // Water Tower Geometry
-
 const waterTowerY = floorLevel;
 waterTower.position.setY(waterTowerY);
 waterTower.position.setX(-barnX);
@@ -123,17 +121,15 @@ waterTower.position.setZ(barnZ);
 
 const pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(12.5, 15, 5);
-
 const ambientLight = new THREE.AmbientLight(0xffffff);
-
 scene.add(pointLight, ambientLight);
-// scene.add(pointLight);
-// scene.add(new THREE.GridHelper(50, 50));
 
+
+//Camera control information
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.maxPolarAngle = 1;
 controls.minPolarAngle = 1;
-// controls.autoRotate = true
+controls.mouseButtons = {};
 
 function animate() {
   requestAnimationFrame(animate);
@@ -150,7 +146,9 @@ function reverseRotation() {
 }
 
 function changeRotationSpeed() {
-  controls.autoRotateSpeed < 0 ? (controls.autoRotateSpeed = speedSlider.value * -1) : (controls.autoRotateSpeed = speedSlider.value);
+  controls.autoRotateSpeed < 0
+    ? (controls.autoRotateSpeed = speedSlider.value * -1)
+    : (controls.autoRotateSpeed = speedSlider.value);
 }
 
 function changeZoomDistance() {
@@ -194,7 +192,9 @@ function generateForest(treeCount) {
     );
 
     const geometryLeavesTop = new THREE.ConeGeometry(1.5, 3.0, 32);
-    const materialLeavesTop = new THREE.MeshStandardMaterial({ color: leafColor });
+    const materialLeavesTop = new THREE.MeshStandardMaterial({
+      color: leafColor,
+    });
     const leavesTop = new THREE.Mesh(geometryLeavesTop, materialLeavesTop);
 
     scene.add(tree);
@@ -220,5 +220,9 @@ function generateForest(treeCount) {
   }
 }
 
-generateForest(15);
-animate();
+function main() {
+  generateForest(15);
+  animate();
+}
+
+main();
